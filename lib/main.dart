@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:httpdemo/user.dart';
 
+import 'insert.dart';
+
 
 void  main()
 {
-  runApp(MaterialApp(home: First(),));
+  runApp(MaterialApp(home: insert(),));
 
 }
 
@@ -23,6 +25,22 @@ class _FirstState extends State<First> {
   List<User> list = [];
 
   getdata()
+  // try {
+  //   var response = await Dio().get('https://jsonplaceholder.typicode.com/users');
+  //   print(response);
+  //
+  //   dynamic data=response.data;
+  //
+  //   data.forEach((d){
+  //     setState(() {
+  //       l.add(user.fromJson(d));
+  //     });
+  //
+  //   });
+  // } catch (e) {
+  //   print(e);
+  // }
+
   async {
     var url = Uri.parse('https://jsonplaceholder.typicode.com/posts');
     var response = await http.get(url);
