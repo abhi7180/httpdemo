@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:httpdemo/mycls.dart';
 import 'package:httpdemo/user.dart';
 
 import 'insert.dart';
@@ -9,7 +10,7 @@ import 'insert.dart';
 
 void  main()
 {
-  runApp(MaterialApp(home: insert(),));
+  runApp(MaterialApp(home: First(),));
 
 }
 
@@ -22,7 +23,7 @@ class First extends StatefulWidget {
 
 class _FirstState extends State<First> {
 
-  List<User> list = [];
+  List<mycls> list = [];
 
   getdata()
   // try {
@@ -42,16 +43,14 @@ class _FirstState extends State<First> {
   // }
 
   async {
-    var url = Uri.parse('https://jsonplaceholder.typicode.com/posts');
+    var url = Uri.parse('https://abhiflutter.000webhostapp.com/get_mydata.php');
     var response = await http.get(url);
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
 
     dynamic data = jsonDecode(response.body);
 
     data.forEach((e) {
       setState(() {
-        list.add(User.fromJson(e));
+        list.add(mycls.fromJson(e));
       });
     });
   }
@@ -74,8 +73,8 @@ class _FirstState extends State<First> {
         itemCount: list.length,
         itemBuilder: (context, index) {
         return ListTile(
-          title: Text("${list[index].title}"),
-          subtitle: Text("${list[index].body}"),
+          title: Text("${list[index].name}"),
+          subtitle: Text("${list[index].contact}"),
         );
       },),
     );
