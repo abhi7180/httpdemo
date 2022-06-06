@@ -44,10 +44,11 @@ class _FirstState extends State<First> {
 
   async {
     var url = Uri.parse('https://abhiflutter.000webhostapp.com/get_mydata.php');
-    var response = await http.get(url);
+    var response = await http.post(url);
 
     dynamic data = jsonDecode(response.body);
 
+    list.clear();
     data.forEach((e) {
       setState(() {
         list.add(mycls.fromJson(e));
@@ -73,10 +74,47 @@ class _FirstState extends State<First> {
         itemCount: list.length,
         itemBuilder: (context, index) {
         return ListTile(
+          onTap: () async {
+
+
+          },
           title: Text("${list[index].name}"),
           subtitle: Text("${list[index].contact}"),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(onPressed: () async {
+
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                  return insert(list[index]);
+                },));
+
+
+              }, icon: Icon(Icons.edit,color: Colors.black,)),
+              IconButton(onPressed: () async {
+
+                var url = Uri.parse('https://abhiflutter.000webhostapp.com/delete.php?id=${list[index].id}');
+                var response = await http.get(url);
+                print(response.body);
+                if(response.body=="data deleted")
+                {
+                  getdata();
+                }
+
+              }, icon: Icon(Icons.delete,color: Colors.black,)),
+            ],
+          )
         );
       },),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+
+
+
+        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        //   return insert(list[]);
+        // },));
+
+      },child: Icon(Icons.add),),
     );
   }
 }
